@@ -132,7 +132,7 @@ It is recommended that the citations are managed by `biblatex`. The preamble of 
 \addbibresource{reference.bib}
 ```
 
-This `.bib` file can manage many papers in the following format:
+The `reference.bib` file can manage many papers in the following format:
 
 ```latex
 @article{Chizaki:MSSP2022,
