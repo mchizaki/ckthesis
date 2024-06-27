@@ -48,7 +48,7 @@ $ sudo mktexlsr
 - `fontsize` (default: `10pt`): fontsize of ltjsbook class (`10pt`, `11pt`, `12pt`)
 - `left` (default: `40truemm`): margin dimensions at odd pages
 - `right` (default: `25truemm`): margin dimensions at odd pages
-- `english` [boolean]; if this option is specified, the document language is English, otherwise Japanese
+- `english` [boolean]: if this option is specified, the document language is English, otherwise Japanese
 
 - `draft` [boolean]: all figures are converted to boxes and all hyperlinks are removed.
 - `mtpro2` [boolean]: Font of MathTime Professional 2 are used
