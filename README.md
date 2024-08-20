@@ -46,8 +46,10 @@ $ sudo mktexlsr
 ### Class options
 
 - `fontsize` (default: `10pt`): fontsize of ltjsbook class (`10pt`, `11pt`, `12pt`)
-- `left` (default: `40truemm`): margin dimensions at odd pages
-- `right` (default: `25truemm`): margin dimensions at odd pages
+- `left`   (default: `40truemm`): left margin dimension at odd pages
+- `right`  (default: `25truemm`): right margin dimension at odd pages
+- `top`    (default: `25truemm`): top margin dimension
+- `bottom` (default: `25truemm`): bottom margin dimension
 - `english` [boolean]: if this option is specified, the document language is English, otherwise Japanese
 
 - `draft` [boolean]: all figures are converted to boxes and all hyperlinks are removed.
@@ -60,7 +62,9 @@ e.g.
         english,
         fontsize=11pt,
         left=40truemm,
-        right=25truemm
+        right=25truemm,
+        top=25truemm,
+        bottom=25truemm
 ]{ckthesis}
 ```
 
@@ -165,3 +169,4 @@ The file in this format can be easily obtained from the paper's website. For ins
 ![img6](sample/img6_chap1_even.png)
 
 ![img7](sample/img7_reference.png)
+
