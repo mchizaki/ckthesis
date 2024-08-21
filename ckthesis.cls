@@ -14,8 +14,6 @@
 %  - fontsize (default: 10pt)
 %      - fontsize of ltjsbook class
 %      - 10pt, 11pt, 12pt
-%  - mtpro2 (true or false)
-%      - MathTime Professional 2 are used
 %  - left   (default: 40truemm)
 %  - right  (default: 25truemm)
 %  - top    (default: 25truemm)
@@ -55,7 +53,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat {LaTeX2e}
-\ProvidesExplPackage {ckthesis} {2024-08-21} {1.1} {CK PhD thesis}
+\ProvidesExplPackage {ckthesis} {2024-08-21} {1.2} {CK PhD thesis}
 
 
 
@@ -266,31 +264,12 @@
 %===============================%
 % Font & math font
 %===============================%
-% font
-\bool_if:NTF \g_ckop_mtpro_bool {
-  % Termes & MathTime Professional 2 Fonts
-  \RequirePackage{ tgtermes, tgheros }
-  \RequirePackage[ T1 ]{ fontenc }
-  \renewcommand{\bfdefault}{bx}
-  \renewcommand{\ttdefault}{lmtt}
-  \renewcommand{\rmdefault}{ptm}
-
-  \RequirePackage{ amsmath }
-  \RequirePackage[
-    subscriptcorrection,
-    slantedGreek,
-    nofontinfo
-  ]{ mtpro2 }
-}{
-  % Only Termes
-  \RequirePackage{ qtxmath }
-  \RequirePackage{ tgtermes, tgheros }
-  \RequirePackage[ T1 ]{ fontenc }
-  \renewcommand{\bfdefault}{bx}
-  \renewcommand{\ttdefault}{lmtt}
-
-  \RequirePackage{ amsmath, amssymb }
-}
+% Termes
+\RequirePackage{ qtxmath }
+\RequirePackage{ tgtermes, tgheros }
+\RequirePackage[ T1 ]{ fontenc }
+\renewcommand{\bfdefault}{bx}
+\renewcommand{\ttdefault}{lmtt}
 
 
 
@@ -298,10 +277,7 @@
 %===============================%
 % Math packages
 %===============================%
-\RequirePackage{ amsthm    }
-\RequirePackage{ bm        }
-\RequirePackage{ mathtools }
-\RequirePackage{ empheq    }
+\RequirePackage{ amsthm }
 
 
 
@@ -588,14 +564,6 @@
 
 
 \ExplSyntaxOff
-
-
-
-
-%===============================%
-% Math Operator
-%===============================%
-\DeclareMathOperator{\sinc}{sinc}
 
 
 

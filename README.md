@@ -53,7 +53,6 @@ $ sudo mktexlsr
 - `headsep` (default: `10truemm`): vertical length between the header and the top of the text area
 - `english` [boolean]: if this option is specified, the document language is English, otherwise Japanese
 - `draft` [boolean]: all figures are converted to boxes and all hyperlinks are removed.
-- `mtpro2` [boolean]: font of MathTime Professional 2 are used
 - `headrule` [boolean]: header with rule line
 - `headfontsc` [boolean]: heading font is Pagella small caps
 
@@ -72,7 +71,7 @@ e.g.
         headrule,
         headfontsc,
         headsep=10truemm,
-	    fleqn
+        fleqn
 ]{ckthesis}
 ```
 
