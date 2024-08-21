@@ -383,8 +383,9 @@
   \renewcommand{\tableofcontents}{
     {%
     \renewcommand{\headfont}{\CKHeadFont\bfseries}%
-    \renewcommand{\normalfont}{\CKHeadFont}%
-    \CKHeadFont\OriginalTableOfContents%
+    % \renewcommand{\normalfont}{\CKHeadFont}%
+    %\CKHeadFont%
+    \OriginalTableOfContents%
     }%
   }
 }
