@@ -16,9 +16,20 @@
 %      - 10pt, 11pt, 12pt
 %  - mtpro2 (true or false)
 %      - MathTime Professional 2 are used
-%  - left  (default: 40truemm)
-%  - right (default: 25truemm)
+%  - left   (default: 40truemm)
+%  - right  (default: 25truemm)
+%  - top    (default: 25truemm)
+%  - bottom (default: 25truemm)
 %      - margin dimensions at odd pages
+%  - headsep (default: 10truemm)
+%      - vertical length between the header and the top of the text area
+%  - headrule (true or false)
+%      - header with rule
+%  - headfontsc (true or false)
+%      - heading font is Pagella small caps
+%
+%  Other options:
+%      same options in ltjsbook (e.g. fleqn)
 %
 %  %====================================%
 %  % variables setting commands         %
@@ -44,7 +55,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat {LaTeX2e}
-\ProvidesExplPackage {ckthesis} {2024-06-27} {1.0.0} {CK PhD thesis}
+\ProvidesExplPackage {ckthesis} {2024-08-21} {1.1} {CK PhD thesis}
 
 
 
@@ -57,17 +68,27 @@
 
 \dim_new:N  \g_ckop_margin_left_dim
 \dim_new:N  \g_ckop_margin_right_dim
+\dim_new:N  \g_ckop_margin_top_dim
+\dim_new:N  \g_ckop_margin_bottom_dim
+\dim_new:N  \g_ckop_headsep_dim
 \str_new:N  \g_ckop_fontsize_str
 \bool_new:N \g_ckop_draft_bool
 \bool_new:N \g_ckop_english_bool
 \bool_new:N \g_ckop_mtpro_bool
+\bool_new:N \g_ckop_headrule_bool
+\bool_new:N \g_ckop_headfont_sc_bool
 
-\dim_gset:Nn \g_ckop_margin_left_dim  { 40truemm }
-\dim_gset:Nn \g_ckop_margin_right_dim { 25truemm }
+\dim_gset:Nn \g_ckop_margin_left_dim   { 40truemm }
+\dim_gset:Nn \g_ckop_margin_right_dim  { 25truemm }
+\dim_gset:Nn \g_ckop_margin_top_dim    { 25truemm }
+\dim_gset:Nn \g_ckop_margin_bottom_dim { 25truemm }
+\dim_gset:Nn \g_ckop_headsep_dim { 10truemm }
 \str_gset:Nn \g_ckop_fontsize_str { 10pt }
 \bool_gset_false:N \g_ckop_draft_bool
 \bool_gset_false:N \g_ckop_english_bool
 \bool_gset_false:N \g_ckop_mtpro_bool
+\bool_gset_false:N \g_ckop_headrule_bool
+\bool_gset_false:N \g_ckop_headfont_sc_bool
 
 
 
@@ -76,12 +97,17 @@
 % Applicating options to class
 %===============================%
 \keys_define:nn { ckthesis } {
-	left      .dim_gset:N = \g_ckop_margin_left_dim,
-	right     .dim_gset:N = \g_ckop_margin_right_dim,
-	fontsize  .str_gset:N = \g_ckop_fontsize_str,
-	draft    .bool_gset:N = \g_ckop_draft_bool,
-	english  .bool_gset:N = \g_ckop_english_bool,
-	mtpro2   .bool_gset:N = \g_ckop_mtpro_bool
+	left        .dim_gset:N = \g_ckop_margin_left_dim,
+	right       .dim_gset:N = \g_ckop_margin_right_dim,
+	top         .dim_gset:N = \g_ckop_margin_top_dim,
+	bottom      .dim_gset:N = \g_ckop_margin_bottom_dim,
+	headsep     .dim_gset:N = \g_ckop_headsep_dim,
+	fontsize    .str_gset:N = \g_ckop_fontsize_str,
+	draft      .bool_gset:N = \g_ckop_draft_bool,
+	english    .bool_gset:N = \g_ckop_english_bool,
+	mtpro2     .bool_gset:N = \g_ckop_mtpro_bool,
+	headrule   .bool_gset:N = \g_ckop_headrule_bool,
+	headfontsc .bool_gset:N = \g_ckop_headfont_sc_bool
 }
 \ProcessKeysOptions { ckthesis }
 
@@ -138,30 +164,30 @@
 %===============================%
 % Skip/Margin
 %===============================%
-\renewcommand{\baselinestretch}{1.3}
+\renewcommand{\baselinestretch}{1.2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \oddsidemargin and \fullwidth are calculated by [leftmargin] and [rightmargin]
+% \oddsidemargin and \fullwidth are calculated by [LeftMargin] and [RightMargin]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	\paperwidth = [leftmargin] + \fullwidth + [rightmargin]
+%	\paperwidth = [LeftMargin] + \fullwidth + [RightMargin]
 %
-% [leftmargin]  = 1in + \oddsidemargin
-% [rightmargin] = \paperwidth - \fullwidth - [leftmargin]
+% [LeftMargin]  = 1in + \oddsidemargin
+% [RightMargin] = \paperwidth - \fullwidth - [LeftMargin]
 %               = \paperwidth - \fullwidth - 1in - \oddsidemargin
 %   |
 %   v
-% \oddsidemargin = [leftmargin] - 1in
+% \oddsidemargin = [LeftMargin] - 1in
 % \evensidemargin = [right]
-% \fullwidth = \paperwidth - 1in - \oddsidemargin - [rightmargin]
+% \fullwidth = \paperwidth - 1in - \oddsidemargin - [RightMargin]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % * odd page margin
-%     * leftmargin: default: 40 mm
-%     * rightmargin: default: 25 mm
-% * \fullwidth: automatically adjusted by using [leftmargin] and [rightmargin]
+%     * LeftMargin: default: 40 mm
+%     * RightMargin: default: 25 mm
+% * \fullwidth: automatically adjusted by using [LeftMargin] and [RightMargin]
 %     * e.g. if a4paper ( \paperwidth = 210 mm )
 %       => \fullwidth = 210 - 40 - 25 = 145 mm
 %     * note: ltjsbook default => \fullwidth = 142.3 mm
@@ -180,14 +206,102 @@
 \addtolength{\textwidth}{-\CKRightMargin}
 \setlength{\fullwidth}{\textwidth}
 
-% oddsidemargin
+% set oddsidemargin
 \setlength{\oddsidemargin}{\CKLeftMargin}
 \addtolength{\oddsidemargin}{-1in}
 
-% evensidemargin
+% set evensidemargin
 % ( => left and right margins are reversed )
 \setlength{\evensidemargin}{\CKRightMargin}
 \addtolength{\evensidemargin}{-1in}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \topmargin and \textheight are calculated by [TopMargin] and [BottomMargin]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\paperheight = [TopMargin] + [BottomMargin] + \textheight
+%                + \headheigh + \headsep + \footskip
+%
+% [TopMargin]    = 1in + \topmargin
+% [BottomMargin] = \paperheight - [TopMargin] - \textheight
+%                  - \headheight - \headsep -\footskip
+%                = \paperheight - 1in - \topmargin - \textheight
+%                  - \headheight - \headsep -\footskip
+%   |
+%   v
+% \topmargin  = [TopMargin] - 1in
+% \textheight = \paperheight - 1in - \topmargin - [BottomMargin]
+%               - \headheight - \headsep -\footskip
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% define top and bottom margins
+\newlength{\CKTopMargin}
+\newlength{\CKBottomMargin}
+\setlength{\CKTopMargin}{\g_ckop_margin_top_dim}
+\setlength{\CKBottomMargin}{\g_ckop_margin_bottom_dim}
+
+% set headsep
+\setlength{\headsep}{\g_ckop_headsep_dim}
+
+% set topmargin
+\setlength{\topmargin}{\CKTopMargin}
+\addtolength{\topmargin}{-1in}
+
+% set textheight
+\setlength{\textheight}{\paperheight}
+\addtolength{\textheight}{-1in}
+\addtolength{\textheight}{-\topmargin}
+\addtolength{\textheight}{-\CKBottomMargin}
+\addtolength{\textheight}{-\headheight}
+\addtolength{\textheight}{-\headsep}
+\addtolength{\textheight}{-\footskip}
+
+
+
+
+%===============================%
+% Font & math font
+%===============================%
+% font
+\bool_if:NTF \g_ckop_mtpro_bool {
+  % Termes & MathTime Professional 2 Fonts
+  \RequirePackage{ tgtermes, tgheros }
+  \RequirePackage[ T1 ]{ fontenc }
+  \renewcommand{\bfdefault}{bx}
+  \renewcommand{\ttdefault}{lmtt}
+  \renewcommand{\rmdefault}{ptm}
+
+  \RequirePackage{ amsmath }
+  \RequirePackage[
+    subscriptcorrection,
+    slantedGreek,
+    nofontinfo
+  ]{ mtpro2 }
+}{
+  % Only Termes
+  \RequirePackage{ qtxmath }
+  \RequirePackage{ tgtermes, tgheros }
+  \RequirePackage[ T1 ]{ fontenc }
+  \renewcommand{\bfdefault}{bx}
+  \renewcommand{\ttdefault}{lmtt}
+
+  \RequirePackage{ amsmath, amssymb }
+}
+
+
+
+
+%===============================%
+% Math packages
+%===============================%
+\RequirePackage{ amsthm    }
+\RequirePackage{ bm        }
+\RequirePackage{ mathtools }
+\RequirePackage{ empheq    }
 
 
 
@@ -195,13 +309,15 @@
 %===============================%
 % Heading
 %===============================%
-\renewcommand{\headfont}{\mcfamily\rmfamily\bfseries}
-
+\bool_if:NTF \g_ckop_headfont_sc_bool {
+  \newcommand{\CKHeadFont}{\fontencoding{T1}\fontfamily{qpl}\scshape}
+}{
+  \newcommand{\CKHeadFont}{\fontencoding{T1}\fontfamily{ptm}}
+}
 
 \RequirePackage{titlesec}
 
-\titleformat{\chapter}[display]{\Huge\bfseries}{\chaptertitlename \thechapter}{0.5em}{}
-
+\titleformat{\chapter}[display]{\CKHeadFont\HUGE\bfseries}{\chaptertitlename \thechapter}{0.5em}{}
 \titleformat*{\section}{\Large\bfseries}
 \titleformat*{\subsection}{\large\bfseries}
 \titleformat*{\subsubsection}{\large\bfseries}
@@ -215,70 +331,87 @@
 % Pagestyle
 %===============================%
 \RequirePackage{titleps}
-\newpagestyle{chapter}{
-  \headrule
+
+\newcommand{\CKHeaderFont}{\CKHeadFont\itshape}
+\newcommand{\CKHeaderNumberFont}{\CKHeadFont\bfseries}
+
+\renewpagestyle{plain}{
   \sethead[
-    \textbf{\thepage}
-  ][][
-    \thechapter \quad \chaptertitle
-  ]{
-    \thesection\quad\sectiontitle
-  }{}{
-    \textbf{\thepage}
+    \CKHeaderNumberFont\thepage
+  ][][]{}{}{
+    \CKHeaderNumberFont\thepage
     }
 }
+
+\renewpagestyle{plainhead}{
+  \sethead[
+    \CKHeaderNumberFont\thepage
+  ][][]{}{}{
+    \CKHeaderNumberFont\thepage
+    }
+}
+
+\renewpagestyle{headings}{
+  \bool_if:NT \g_ckop_headrule_bool { \headrule }%
+  \sethead[
+    \CKHeaderNumberFont\thepage
+  ][][
+    \CKHeaderFont%
+    %
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        \if@omit@number\else
+          \@chapapp\thechapter\@chappos\hskip1\zw
+        \fi
+      \fi
+    \fi
+    %
+    \chaptertitle
+  ]{
+    \CKHeaderFont%
+    \ifnum \c@secnumdepth >\z@ \thesection \hskip1\zw\fi
+    \sectiontitle
+  }{}{
+    \CKHeaderNumberFont\thepage
+    }
+}
+
+
+\newpagestyle{OnlyChapterHeadings}{
+  \bool_if:NT \g_ckop_headrule_bool { \headrule }%
+  \sethead[
+    \CKHeaderNumberFont\thepage
+  ][][
+    \CKHeaderFont\chaptertitle
+  ]{
+    \CKHeaderFont\chaptertitle
+  }{}{
+    \CKHeaderNumberFont\thepage
+    }
+}
+
 \newpagestyle{front}{
-  \sethead[\textbf{\thepage}][][]{}{}{}
-}
-% \renewpagestyle{plain}{
-%   \headrule
-%   \sethead[][][]{}{}{}
-% }
-
-
-
-
-%===============================%
-% Font & math font
-%===============================%
-\bool_if:NTF \g_ckop_mtpro_bool {
-  % mtpro2
-  \RequirePackage{ tgtermes, tgheros }
-  \RequirePackage[ T1 ]{ fontenc }
-  \renewcommand{\bfdefault}{bx}
-  \renewcommand{\ttdefault}{lmtt}
-  \renewcommand{\rmdefault}{ptm}
-  \RequirePackage{ amsmath }
-%  \RequirePackage[ T1 ]{ fontenc }
-%  \RequirePackage{ textcomp }
-%  \renewcommand{\rmdefault}{ptm}
-%  \RequirePackage[ scaled=0.92 ]{ helvet }
-  \RequirePackage[
-    subscriptcorrection,
-    slantedGreek,
-    nofontinfo
-  ]{ mtpro2 }
-
-}{
-  % tgtermes
-  \RequirePackage{ amsmath, amssymb }
-  \RequirePackage{ qtxmath }
-  \RequirePackage{ tgtermes, tgheros }
-  \RequirePackage[ T1 ]{ fontenc }
-  \renewcommand{\bfdefault}{bx}
-  \renewcommand{\ttdefault}{lmtt}
+  \sethead[\CKHeaderNumberFont\thepage][][]{}{}{}
 }
 
 
 
 
 %===============================%
-% Math packages
+% Table of Contents
 %===============================%
-\RequirePackage{ amsthm    }
-\RequirePackage{ bm        }
-\RequirePackage{ mathtools }
-\RequirePackage{ empheq    }
+\renewcommand{\headfont}{\mcfamily\rmfamily\bfseries}
+
+\bool_if:NT \g_ckop_headfont_sc_bool {
+  \let\OriginalTableOfContents\tableofcontents
+  \renewcommand{\tableofcontents}{
+    {%
+    \renewcommand{\headfont}{\CKHeadFont\bfseries}%
+    \renewcommand{\normalfont}{\CKHeadFont}%
+    \CKHeadFont\OriginalTableOfContents%
+    }%
+  }
+}
 
 
 
@@ -311,26 +444,6 @@
 	\end{center}
 	\vspace{2em}
 }
-
-
-
-
-%===============================%
-% Table of Contents
-%===============================%
-% \newcommand{\cklistfigures}[1]{%
-%   \iftotalfigures
-%     \addcontentsline{toc}{chapter}{\listfigurename}
-%     \listoffigures
-%   \fi
-% }
-
-% \newcommand{\cklisttables}[1]{%
-%   \iftotaltables
-%     \addcontentsline{toc}{chapter}{\listtablename}
-%     \listoftables
-%   \fi
-% }
 
 
 
@@ -508,3 +621,4 @@
 \newcommand{\emphline}[1]{%
 	\ckunderline[-1.5pt]{1pt}{#1}%
 }
+
