@@ -50,21 +50,29 @@ $ sudo mktexlsr
 - `right`  (default: `25truemm`): right margin dimension at odd pages
 - `top`    (default: `25truemm`): top margin dimension
 - `bottom` (default: `25truemm`): bottom margin dimension
+- `headsep` (default: `10truemm`): vertical length between the header and the top of the text area
 - `english` [boolean]: if this option is specified, the document language is English, otherwise Japanese
-
 - `draft` [boolean]: all figures are converted to boxes and all hyperlinks are removed.
-- `mtpro2` [boolean]: Font of MathTime Professional 2 are used
+- `mtpro2` [boolean]: font of MathTime Professional 2 are used
+- `headrule` [boolean]: header with rule line
+- `headfontsc` [boolean]: heading font is Pagella small caps
+
+Other: same options in ltjsbook (e.g. `fleqn`)
 
 e.g.
 
 ```latex
 \documentclass[
         english,
-        fontsize=11pt,
-        left=40truemm,
-        right=25truemm,
-        top=25truemm,
-        bottom=25truemm
+        fontsize=10pt,
+        left=35truemm,
+        right=20truemm,
+        top=15truemm,
+        bottom=20truemm,
+        headrule,
+        headfontsc,
+        headsep=10truemm,
+	    fleqn
 ]{ckthesis}
 ```
 
