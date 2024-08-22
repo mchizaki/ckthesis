@@ -53,7 +53,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat {LaTeX2e}
-\ProvidesExplPackage {ckthesis} {2024-08-21} {1.2} {CK PhD thesis}
+\ProvidesExplPackage {ckthesis} {2024-08-22} {1.3} {CK PhD thesis}
 
 
 
@@ -286,14 +286,16 @@
 % Heading
 %===============================%
 \bool_if:NTF \g_ckop_headfont_sc_bool {
-  \newcommand{\CKHeadFont}{\fontencoding{T1}\fontfamily{qpl}\scshape}
+  \newcommand{\CKHeadFont}{\fontencoding{T1}\fontfamily{qpl}}
+  \newcommand{\CKHeadFontSC}{\CKHeadFont\scshape}
 }{
   \newcommand{\CKHeadFont}{\fontencoding{T1}\fontfamily{ptm}}
+  \newcommand{\CKHeadFontSC}{\CKHeadFont}
 }
 
 \RequirePackage{titlesec}
 
-\titleformat{\chapter}[display]{\CKHeadFont\HUGE\bfseries}{\chaptertitlename \thechapter}{0.5em}{}
+\titleformat{\chapter}[display]{\CKHeadFontSC\HUGE\bfseries}{\chaptertitlename \thechapter}{0.5em}{}
 \titleformat*{\section}{\Large\bfseries}
 \titleformat*{\subsection}{\large\bfseries}
 \titleformat*{\subsubsection}{\large\bfseries}
@@ -308,8 +310,9 @@
 %===============================%
 \RequirePackage{titleps}
 
-\newcommand{\CKHeaderFont}{\CKHeadFont\itshape}
-\newcommand{\CKHeaderNumberFont}{\CKHeadFont\bfseries}
+\newcommand{\CKHeaderFont}{\CKHeadFontSC\itshape}
+\newcommand{\CKHeaderSubFont}{\CKHeadFont\itshape\small}
+\newcommand{\CKHeaderNumberFont}{\CKHeadFontSC\bfseries}
 
 \renewpagestyle{plain}{
   \sethead[
@@ -344,8 +347,10 @@
     %
     \chaptertitle
   ]{
-    \CKHeaderFont%
-    \ifnum \c@secnumdepth >\z@ \thesection \hskip1\zw\fi
+    {\CKHeaderFont%
+      \ifnum \c@secnumdepth >\z@ \thesection \hskip1\zw\fi
+    }%
+    \CKHeaderSubFont%
     \sectiontitle
   }{}{
     \CKHeaderNumberFont\thepage
