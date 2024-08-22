@@ -287,15 +287,16 @@
 %===============================%
 \bool_if:NTF \g_ckop_headfont_sc_bool {
   \newcommand{\CKHeadFont}{\fontencoding{T1}\fontfamily{qpl}}
-  \newcommand{\CKHeadFontSC}{\CKHeadFont\scshape}
+  \newcommand{\CKHeadFontSC}{\fontencoding{T1}\fontfamily{qpl}\scshape}
 }{
   \newcommand{\CKHeadFont}{\fontencoding{T1}\fontfamily{ptm}}
   \newcommand{\CKHeadFontSC}{\CKHeadFont}
 }
+\newcommand{\CKChapterFont}{\CKHeadFontSC\HUGE\bfseries}
 
 \RequirePackage{titlesec}
 
-\titleformat{\chapter}[display]{\CKHeadFontSC\HUGE\bfseries}{\chaptertitlename \thechapter}{0.5em}{}
+\titleformat{\chapter}[display]{\CKChapterFont}{\chaptertitlename \thechapter}{0.5em}{}
 \titleformat*{\section}{\Large\bfseries}
 \titleformat*{\subsection}{\large\bfseries}
 \titleformat*{\subsubsection}{\large\bfseries}
@@ -387,7 +388,7 @@
   \let\OriginalTableOfContents\tableofcontents
   \renewcommand{\tableofcontents}{
     {%
-    \renewcommand{\headfont}{\CKHeadFont\bfseries}%
+    \renewcommand{\headfont}{\CKHeadFontSC\bfseries}%
     % \renewcommand{\normalfont}{\CKHeadFont}%
     %\CKHeadFont%
     \OriginalTableOfContents%
