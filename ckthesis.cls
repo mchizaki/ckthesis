@@ -299,7 +299,7 @@
 \titleformat{\chapter}[display]{\CKChapterFont}{\chaptertitlename \thechapter}{0.5em}{}
 \titleformat*{\section}{\Large\bfseries}
 \titleformat*{\subsection}{\large\bfseries}
-\titleformat*{\subsubsection}{\large\bfseries}
+\titleformat*{\subsubsection}{\normalsize\bfseries}
 
 \renewcommand{\appendixname}{Appendix{\ }}
 
