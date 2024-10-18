@@ -268,7 +268,7 @@
 \RequirePackage{ qtxmath }
 %\RequirePackage{ tgtermes, tgheros }
 \RequirePackage{ tgtermes }
-\RequirePackage[ scaled=0.92 ]{ helvet }
+\RequirePackage[ scaled ]{ helvet }
 \RequirePackage[ T1 ]{ fontenc }
 \renewcommand{\bfdefault}{bx}
 \renewcommand{\ttdefault}{lmtt}
