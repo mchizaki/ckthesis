@@ -213,6 +213,16 @@
 \setlength{\evensidemargin}{\CKRightMargin}
 \addtolength{\evensidemargin}{-1in}
 
+% set marginpar
+\setlength{\marginparsep}{10pt}
+\setlength{\marginparwidth}{\paperwidth}
+\addtolength{\marginparwidth}{-\fullwidth}
+\addtolength{\marginparwidth}{-\marginparsep}
+% if \reversemarginpar:
+% \addtolength{\marginparwidth}{-\CKRightMargin}
+% if \normalmarginpar:
+\addtolength{\marginparwidth}{-\CKLeftMargin}
+\setlength{\marginparwidth}{.98\marginparwidth}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
