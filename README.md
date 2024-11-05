@@ -55,6 +55,7 @@ $ sudo mktexlsr
 - `draft` [boolean]: all figures are converted to boxes and all hyperlinks are removed.
 - `headrule` [boolean]: header with rule line
 - `headfontsc` [boolean]: heading font is Pagella small caps
+- `reversemarginpar` [boolean]: use \reversemarginpar and adjust \marginparwidth
 
 Other: same options in ltjsbook (e.g. `fleqn`)
 
@@ -71,6 +72,7 @@ e.g.
         headrule,
         headfontsc,
         headsep=10truemm,
+	reversemarginpar,
         fleqn
 ]{ckthesis}
 ```

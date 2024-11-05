@@ -25,6 +25,8 @@
 %      - header with rule
 %  - headfontsc (true or false)
 %      - heading font is Pagella small caps
+%  - reversemarginpar (true or false)
+%      - \reversemarginpar and adjust marginparwidth
 %
 %  Other options:
 %      same options in ltjsbook (e.g. fleqn)
@@ -75,6 +77,7 @@
 \bool_new:N \g_ckop_mtpro_bool
 \bool_new:N \g_ckop_headrule_bool
 \bool_new:N \g_ckop_headfont_sc_bool
+\bool_new:N \g_ckop_reversemarginpar_bool
 
 \dim_gset:Nn \g_ckop_margin_left_dim   { 40truemm }
 \dim_gset:Nn \g_ckop_margin_right_dim  { 25truemm }
@@ -87,7 +90,7 @@
 \bool_gset_false:N \g_ckop_mtpro_bool
 \bool_gset_false:N \g_ckop_headrule_bool
 \bool_gset_false:N \g_ckop_headfont_sc_bool
-
+\bool_gset_false:N \g_ckop_reversemarginpar_bool
 
 
 
@@ -105,7 +108,8 @@
 	english    .bool_gset:N = \g_ckop_english_bool,
 	mtpro2     .bool_gset:N = \g_ckop_mtpro_bool,
 	headrule   .bool_gset:N = \g_ckop_headrule_bool,
-	headfontsc .bool_gset:N = \g_ckop_headfont_sc_bool
+	headfontsc .bool_gset:N = \g_ckop_headfont_sc_bool,
+	reversemarginpar .bool_gset:N = \g_ckop_reversemarginpar_bool
 }
 \ProcessKeysOptions { ckthesis }
 
@@ -218,10 +222,13 @@
 \setlength{\marginparwidth}{\paperwidth}
 \addtolength{\marginparwidth}{-\fullwidth}
 \addtolength{\marginparwidth}{-\marginparsep}
-% if \reversemarginpar:
-% \addtolength{\marginparwidth}{-\CKRightMargin}
-% if \normalmarginpar:
-\addtolength{\marginparwidth}{-\CKLeftMargin}
+\bool_if:NTF \g_ckop_reversemarginpar_bool {
+  \reversemarginpar
+  \addtolength{\marginparwidth}{-\CKRightMargin}
+}{
+  \normalmarginpar
+  \addtolength{\marginparwidth}{-\CKLeftMargin}
+}
 \setlength{\marginparwidth}{.98\marginparwidth}
 
 
