@@ -1,27 +1,102 @@
 \documentclass[
 	english,
-	fontsize=10pt,
-	left=40truemm,
-	right=25truemm,
-	% top=15truemm,
-	% bottom=20truemm,
-	% headrule,
+	times,
+	fontsize = 11pt,
+	left     = 35truemm,
+	right    = 20truemm,
+	top      = 15truemm,
+	bottom   = 20truemm,
+	headrule,
+	% draft,
+	% tombo,
 	% headfontsc,
-	% headsep=10truemm,
-	% fleqn
+	% headsep  = 10truemm,
+	fleqn,
+	reversemarginpar
 ]{ckthesis}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % preamble
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% figure
+% \graphicspath{%
+% 	...
+% }
 
 %===============================%
-% packages
+% math font
 %===============================%
+% \usepackage[
+% 	subscriptcorrection,
+% 	slantedGreek,
+% 	nofontinfo,
+% 	mtpcal
+% ]{mtpro2}
+
+
+%===============================%
+% math packages
+%===============================%
+% math
+\usepackage{amsmath}
+\usepackage{mathtools}
+\usepackage{empheq}
+\usepackage{bm}
+\usepackage{siunitx}
 \usepackage{physics}
 \usepackage{braket} % after reading physics package
+
+
+%===============================%
+% todo
+%===============================%
+\usepackage[
+        textsize=scriptsize,
+        % textsize=footnotesize,
+        % color=Magenta,
+        linecolor=Magenta,
+        bordercolor=Magenta,
+        backgroundcolor=White,
+        disable
+        % textcolor
+]{todonotes}
+\usepackage{soul}
+\makeatletter
+	\if@todonotes@disabled
+	\newcommand{\hlnote}[3][0pt]{#2}
+	\else
+	\newcommand{\hlnote}[3][0pt]{\texthl{#2}\vspace{-#1}\todo{#3}\vspace{#1}}
+	\fi
+\makeatother
+
+
+%===============================%
+% caption
+%===============================%
+\usepackage{caption}
+\captionsetup[figure]{
+	textfont={small},
+	labelfont={sf,bf,small},
+	margin=0pt,
+	labelsep=space,
+	name=Figure\ {}%
+}
+\captionsetup[table]{
+	textfont={small},
+	labelfont={sf,bf,small},
+	margin=0pt,
+	labelsep=space,
+	name=Table\ {}%
+}
+
+
+%===============================%
+% other packages
+%===============================%
+\usepackage{xspace}
 \usepackage{here}
+\usepackage{enumitem}
 \usepackage[cmyk,dvipsnames]{xcolor}
 \usepackage[bookmarks]{hyperref}
 \usepackage[
@@ -29,6 +104,7 @@
 	backend=biber,
 	sorting=none
 ]{biblatex}
+\usepackage[utf8]{inputenc}
 \usepackage[figure,table]{totalcount}
 
 

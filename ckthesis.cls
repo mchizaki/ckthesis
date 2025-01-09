@@ -9,24 +9,26 @@
 %  % options                            %
 %  %====================================%
 %  - english (true or false)
+%  - times (true or false)
+%      - use times font
 %  - draft (true or false)
 %      - all figures are converted to boxes
-%  - fontsize (default: 10pt)
+%  - fontsize (default: 11pt)
 %      - fontsize of ltjsbook class
 %      - 10pt, 11pt, 12pt
-%  - left   (default: 40truemm)
-%  - right  (default: 25truemm)
-%  - top    (default: 25truemm)
-%  - bottom (default: 25truemm)
+%  - left   (default: 35truemm)
+%  - right  (default: 20truemm)
+%  - top    (default: 15truemm)
+%  - bottom (default: 20truemm)
 %      - margin dimensions at odd pages
 %  - headsep (default: 10truemm)
 %      - vertical length between the header and the top of the text area
 %  - headrule (true or false)
-%      - header with rule
+%      - header => with rule
 %  - headfontsc (true or false)
-%      - heading font is Pagella small caps
+%      - heading font => Pagella small caps
 %  - reversemarginpar (true or false)
-%      - \reversemarginpar and adjust marginparwidth
+%      - use \reversemarginpar and adjust marginparwidth
 %
 %  Other options:
 %      same options in ltjsbook (e.g. fleqn)
@@ -74,20 +76,20 @@
 \str_new:N  \g_ckop_fontsize_str
 \bool_new:N \g_ckop_draft_bool
 \bool_new:N \g_ckop_english_bool
-\bool_new:N \g_ckop_mtpro_bool
+\bool_new:N \g_ckop_times_bool
 \bool_new:N \g_ckop_headrule_bool
 \bool_new:N \g_ckop_headfont_sc_bool
 \bool_new:N \g_ckop_reversemarginpar_bool
 
-\dim_gset:Nn \g_ckop_margin_left_dim   { 40truemm }
-\dim_gset:Nn \g_ckop_margin_right_dim  { 25truemm }
-\dim_gset:Nn \g_ckop_margin_top_dim    { 25truemm }
-\dim_gset:Nn \g_ckop_margin_bottom_dim { 25truemm }
+\dim_gset:Nn \g_ckop_margin_left_dim   { 35truemm }
+\dim_gset:Nn \g_ckop_margin_right_dim  { 20truemm }
+\dim_gset:Nn \g_ckop_margin_top_dim    { 15truemm }
+\dim_gset:Nn \g_ckop_margin_bottom_dim { 20truemm }
 \dim_gset:Nn \g_ckop_headsep_dim { 10truemm }
-\str_gset:Nn \g_ckop_fontsize_str { 10pt }
+\str_gset:Nn \g_ckop_fontsize_str { 11pt }
 \bool_gset_false:N \g_ckop_draft_bool
 \bool_gset_false:N \g_ckop_english_bool
-\bool_gset_false:N \g_ckop_mtpro_bool
+\bool_gset_false:N \g_ckop_times_bool
 \bool_gset_false:N \g_ckop_headrule_bool
 \bool_gset_false:N \g_ckop_headfont_sc_bool
 \bool_gset_false:N \g_ckop_reversemarginpar_bool
@@ -106,7 +108,7 @@
 	fontsize    .str_gset:N = \g_ckop_fontsize_str,
 	draft      .bool_gset:N = \g_ckop_draft_bool,
 	english    .bool_gset:N = \g_ckop_english_bool,
-	mtpro2     .bool_gset:N = \g_ckop_mtpro_bool,
+	times      .bool_gset:N = \g_ckop_times_bool,
 	headrule   .bool_gset:N = \g_ckop_headrule_bool,
 	headfontsc .bool_gset:N = \g_ckop_headfont_sc_bool,
 	reversemarginpar .bool_gset:N = \g_ckop_reversemarginpar_bool
@@ -166,7 +168,13 @@
 %===============================%
 % Skip/Margin
 %===============================%
-\renewcommand{\baselinestretch}{1.2}
+\bool_if:NT \g_ckop_english_bool {
+  % \narrowbaselinesfalse
+  \renewcommand{\baselinestretch}{1.2}
+}
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \oddsidemargin and \fullwidth are calculated by [LeftMargin] and [RightMargin]
@@ -281,15 +289,19 @@
 %===============================%
 % Font & math font
 %===============================%
-% Termes
-\RequirePackage{ qtxmath }
-%\RequirePackage{ tgtermes, tgheros }
-\RequirePackage{ tgtermes }
-\RequirePackage[ scaled ]{ helvet }
 \RequirePackage[ T1 ]{ fontenc }
-\renewcommand{\bfdefault}{bx}
-\renewcommand{\ttdefault}{lmtt}
+\RequirePackage{ mlmodern }
 
+\bool_if:NT \g_ckop_times_bool {
+  %\RequirePackage{ mathptmx }
+  %\RequirePackage{ qtxmath }
+  %\RequirePackage{ tgtermes, tgheros }
+  \RequirePackage{ tgtermes }
+  \RequirePackage[ scaled ]{ helvet }
+  \RequirePackage[ T1 ]{ fontenc }
+  \renewcommand{\bfdefault}{bx}
+  \renewcommand{\ttdefault}{lmtt}
+}
 
 
 
@@ -315,12 +327,26 @@
 
 \RequirePackage{titlesec}
 
-\titleformat{\chapter}[display]{\CKChapterFont}{\chaptertitlename \thechapter}{0.5em}{}
+\bool_if:NTF \g_ckop_english_bool {
+  \titleformat{\chapter}[display]{\CKChapterFont}{\chaptertitlename \thechapter}{0.5em}{}
+  \renewcommand{\appendixname}{Appendix{\ }}
+}{
+  \titleformat{\chapter}[display]{\CKChapterFont}{\chaptertitlename\thechapter\postchaptername}{0.5em}{}
+%  \renewcommand{\appendix}{\appendix}
+  \renewcommand{\appendix}{\par
+    \titleformat{\chapter}[display]{\CKChapterFont}{\chaptertitlename\thechapter}{0.5em}{}
+    \setcounter{chapter}{0}%
+    \setcounter{section}{0}%
+    \gdef\@chapapp{\appendixname}%
+    \gdef\@chappos{}%
+    \gdef\thechapter{\@Alph\c@chapter}}
+
+%  \titleformat{\chapter}[display]{\CKChapterFont}{\prechaptername\thechapter\postchaptername}{0.5em}{}
+}
 \titleformat*{\section}{\Large\bfseries}
 \titleformat*{\subsection}{\large\bfseries}
 \titleformat*{\subsubsection}{\normalsize\bfseries}
 
-\renewcommand{\appendixname}{Appendix{\ }}
 
 
 
@@ -330,8 +356,15 @@
 %===============================%
 \RequirePackage{titleps}
 
-\newcommand{\CKHeaderFont}{\CKHeadFontSC\itshape}
-\newcommand{\CKHeaderSubFont}{\CKHeadFont\itshape\small}
+\newcommand{\CKHeadFontShape}{}
+\bool_if:NT \g_ckop_english_bool {
+  \renewcommand{\CKHeadFontShape}{\itshape}
+}
+
+
+
+\newcommand{\CKHeaderFont}{\CKHeadFontSC\CKHeadFontShape}
+\newcommand{\CKHeaderSubFont}{\CKHeadFont\CKHeadFontShape\small}
 \newcommand{\CKHeaderNumberFont}{\CKHeadFontSC\bfseries}
 
 \renewpagestyle{plain}{

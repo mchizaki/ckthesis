@@ -45,17 +45,18 @@ $ sudo mktexlsr
 
 ### Class options
 
-- `fontsize` (default: `10pt`): fontsize of ltjsbook class (`10pt`, `11pt`, `12pt`)
-- `left`   (default: `40truemm`): left margin dimension at odd pages
-- `right`  (default: `25truemm`): right margin dimension at odd pages
-- `top`    (default: `25truemm`): top margin dimension
-- `bottom` (default: `25truemm`): bottom margin dimension
+- `english` [boolean]: if true: the document language is English, otherwise Japanese
+- `times` [boolean]:  if true: times font is used
+- `draft` [boolean]: if true: all figures are converted to boxes and all hyperlinks are removed.
+- `fontsize` (default: `11pt`): fontsize of ltjsbook class (`10pt`, `11pt`, `12pt`)
+- `left`   (default: `35truemm`): left margin dimension at odd pages
+- `right`  (default: `20truemm`): right margin dimension at odd pages
+- `top`    (default: `15truemm`): top margin dimension
+- `bottom` (default: `20truemm`): bottom margin dimension
 - `headsep` (default: `10truemm`): vertical length between the header and the top of the text area
-- `english` [boolean]: if this option is specified, the document language is English, otherwise Japanese
-- `draft` [boolean]: all figures are converted to boxes and all hyperlinks are removed.
-- `headrule` [boolean]: header with rule line
-- `headfontsc` [boolean]: heading font is Pagella small caps
-- `reversemarginpar` [boolean]: use \reversemarginpar and adjust \marginparwidth
+- `headrule` [boolean]: if true: header with rule line
+- `headfontsc` [boolean]: if true: heading font is Pagella small caps
+- `reversemarginpar` [boolean]: if true: use \reversemarginpar and adjust \marginparwidth
 
 Other: same options in ltjsbook (e.g. `fleqn`)
 
@@ -63,17 +64,20 @@ e.g.
 
 ```latex
 \documentclass[
-        english,
-        fontsize=10pt,
-        left=35truemm,
-        right=20truemm,
-        top=15truemm,
-        bottom=20truemm,
-        headrule,
-        headfontsc,
-        headsep=10truemm,
-	reversemarginpar,
-        fleqn
+    english,
+    times,
+    fontsize = 11pt,
+    left     = 35truemm,
+    right    = 20truemm,
+    top      = 15truemm,
+    bottom   = 20truemm,
+    headrule,
+    draft,
+    tombo,
+    headfontsc,
+    headsep  = 10truemm,
+    fleqn,
+    reversemarginpar
 ]{ckthesis}
 ```
 
@@ -178,4 +182,7 @@ The file in this format can be easily obtained from the paper's website. For ins
 ![img6](sample/img6_chap1_even.png)
 
 ![img7](sample/img7_reference.png)
+
+![img8](sample/img8_chap1_odd_ja.png)
+
 
