@@ -57,7 +57,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat {LaTeX2e}
-\ProvidesExplPackage {ckthesis} {2024-08-22} {1.3} {CK PhD thesis}
+\ProvidesExplPackage {ckthesis} {2025-01-09} {2.0} {CK PhD thesis}
 
 
 
