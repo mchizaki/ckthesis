@@ -135,8 +135,14 @@
 % standard option
 \clist_set:Nn \g_ltjsbook_option_clist {
   titlepage,
-  \g_ckop_fontsize_str, % fontsize option
-  \g_ckop_tombo_bool
+  \g_ckop_fontsize_str % fontsize option
+}
+
+% tombo option
+\bool_if:NT \g_ckop_tombo_bool {
+  \clist_put_left:Nn \g_ltjsbook_option_clist {
+    tombo
+  }
 }
 
 % papersize option
