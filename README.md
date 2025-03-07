@@ -48,7 +48,9 @@ $ sudo mktexlsr
 - `english` [boolean]: if true: the document language is English, otherwise Japanese
 - `times` [boolean]:  if true: times font is used
 - `draft` [boolean]: if true: all figures are converted to boxes and all hyperlinks are removed.
+- `tombo` [boolean]: if true: with trim mark
 - `fontsize` (default: `11pt`): fontsize of ltjsbook class (`10pt`, `11pt`, `12pt`)
+- `b5paper` [boolean]: if true: b5paper, else: a4paper
 - `left`   (default: `35truemm`): left margin dimension at odd pages
 - `right`  (default: `20truemm`): right margin dimension at odd pages
 - `top`    (default: `15truemm`): top margin dimension

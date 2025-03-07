@@ -13,9 +13,12 @@
 %      - use times font
 %  - draft (true or false)
 %      - all figures are converted to boxes
+%  - tombo (true or false)
 %  - fontsize (default: 11pt)
 %      - fontsize of ltjsbook class
 %      - 10pt, 11pt, 12pt
+%  - b5paper (true or false)
+%      - if true: b5paper, else: a4paper (default)
 %  - left   (default: 35truemm)
 %  - right  (default: 20truemm)
 %  - top    (default: 15truemm)
@@ -74,7 +77,9 @@
 \dim_new:N  \g_ckop_margin_bottom_dim
 \dim_new:N  \g_ckop_headsep_dim
 \str_new:N  \g_ckop_fontsize_str
+\bool_new:N \g_ckop_bfivepaper_bool
 \bool_new:N \g_ckop_draft_bool
+\bool_new:N \g_ckop_tombo_bool
 \bool_new:N \g_ckop_english_bool
 \bool_new:N \g_ckop_times_bool
 \bool_new:N \g_ckop_headrule_bool
@@ -87,7 +92,9 @@
 \dim_gset:Nn \g_ckop_margin_bottom_dim { 20truemm }
 \dim_gset:Nn \g_ckop_headsep_dim { 10truemm }
 \str_gset:Nn \g_ckop_fontsize_str { 11pt }
+\bool_gset_false:N \g_ckop_bfivepaper_bool
 \bool_gset_false:N \g_ckop_draft_bool
+\bool_gset_false:N \g_ckop_tombo_bool
 \bool_gset_false:N \g_ckop_english_bool
 \bool_gset_false:N \g_ckop_times_bool
 \bool_gset_false:N \g_ckop_headrule_bool
@@ -107,7 +114,9 @@
 	headsep     .dim_gset:N = \g_ckop_headsep_dim,
 	fontsize    .str_gset:N = \g_ckop_fontsize_str,
 	draft      .bool_gset:N = \g_ckop_draft_bool,
+	tombo      .bool_gset:N = \g_ckop_tombo_bool,
 	english    .bool_gset:N = \g_ckop_english_bool,
+	b5paper    .bool_gset:N = \g_ckop_bfivepaper_bool,
 	times      .bool_gset:N = \g_ckop_times_bool,
 	headrule   .bool_gset:N = \g_ckop_headrule_bool,
 	headfontsc .bool_gset:N = \g_ckop_headfont_sc_bool,
@@ -125,9 +134,18 @@
 
 % standard option
 \clist_set:Nn \g_ltjsbook_option_clist {
-  a4paper,
   titlepage,
-  \g_ckop_fontsize_str % fontsize option
+  \g_ckop_fontsize_str, % fontsize option
+  \g_ckop_tombo_bool
+}
+
+% papersize option
+\clist_put_left:Nn \g_ltjsbook_option_clist {
+  \bool_if:NTF \g_ckop_bfivepaper_bool {
+    b5paper, papersize
+  } {
+    a4paper, papersize
+  }
 }
 
 % english option
